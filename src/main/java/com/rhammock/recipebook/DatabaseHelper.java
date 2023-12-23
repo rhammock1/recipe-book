@@ -98,8 +98,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("[DB]", "Successfully setup database");
     }
 
+    public List<IngredientModel> getIngredientsByRecipeId(int recipe_id) {
+        Log.d("[DB]", "Getting ingredients for recipe: " + recipe_id);
+
+        List<IngredientModel> ingredients = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT ingredient_id, name, quantity, unit, image_url" +
+                " FROM ingredients WHERE recipe_id = " + recipe_id + ";";
+
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()) {
+            try {
+                do {
+                    int ingredient_id = cursor.getInt(cursor.getColumnIndexOrThrow("ingredient_id"));
+                    String ingredient_name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                    float quantity = cursor.getFloat(cursor.getColumnIndexOrThrow("quantity"));
+                    String unit = cursor.getString(cursor.getColumnIndexOrThrow("unit"));
+                    String image_url = cursor.getString(cursor.getColumnIndexOrThrow("image_url"));
+
+                    IngredientModel ingredient = new IngredientModel(ingredient_id, recipe_id, ingredient_name, quantity, unit, image_url);
+                    ingredients.add(ingredient);
+                } while(cursor.moveToNext());
+            } catch(Exception e) {
+                // Note to self: all exceptions are descended from Exception
+                Log.e("[DB]", "Failed to get ingredients" + e);
+            }
+        }
+        cursor.close();
+        db.close();
+        return ingredients;
+    }
+
     public RecipeModel getRecipe(int recipe_id) {
-        Log.d("[DB}", "Getting recipe: " + recipe_id);
+        Log.d("[DB]", "Getting recipe: " + recipe_id);
 
         RecipeModel recipe = null;
         SQLiteDatabase db = this.getReadableDatabase();

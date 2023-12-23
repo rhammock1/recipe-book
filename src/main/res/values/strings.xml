@@ -12,4 +12,5 @@
     <string name="DynPrepTime">10 min</string>
     <string name="DynCookTime">30 min.</string>
     <string name="BackButton">Back</string>
+    <string name="IngredientsList">Ingredients</string>
 </resources>
