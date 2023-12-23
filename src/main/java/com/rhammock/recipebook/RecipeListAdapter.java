@@ -53,7 +53,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Vi
             public void onClick(View view) {
                 // Implement onclick logic here (change Activity to display the recipe)
                 Intent intent = new Intent(context, RecipeActivity.class);
-                startActivity(intent);
+                intent.putExtra("recipeId", Integer.toString(recipe.getRecipeId()));
+                context.startActivity(intent);
             }
         });
     }

@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">Recipe Book</string>
     <string name="RecipeNames">Recipes</string>
-    <string name="RecipeName">Name</string>
+    <string name="RecipeNameLabel">Name</string>
     <string name="PrepTime">Prep Time</string>
     <string name="CookTime">Cook Time</string>
     <string name="Recipes">Recipes</string>
     <string name="ViewRecipe">View</string>
+    <string name="RecipeName">this.recipe.recipe_name</string>
+    <string name="nextStepButton"><![CDATA[" > "]]></string>
+    <string name="PrevStepButton"><![CDATA[" < "]]></string>
+    <string name="DynPrepTime">10 min</string>
+    <string name="DynCookTime">30 min.</string>
+    <string name="BackButton">Back</string>
 </resources>

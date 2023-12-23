@@ -98,6 +98,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("[DB]", "Successfully setup database");
     }
 
+    public RecipeModel getRecipe(int recipe_id) {
+        Log.d("[DB}", "Getting recipe: " + recipe_id);
+
+        RecipeModel recipe = null;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT recipe_id," +
+            " name, prep_time, cook_time, image_url" +
+                " FROM recipes WHERE recipe_id = ?;";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(recipe_id)});
+        if(cursor.moveToFirst()) {
+            try {
+                String recipe_name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                String recipe_prep_time = cursor.getString(cursor.getColumnIndexOrThrow("prep_time"));
+                String recipe_cook_time = cursor.getString(cursor.getColumnIndexOrThrow("cook_time"));
+                String image_url = cursor.getString(cursor.getColumnIndexOrThrow("image_url"));
+
+                recipe = new RecipeModel(recipe_id, recipe_name, recipe_prep_time, recipe_cook_time, image_url);
+            } catch(Exception e) {
+                Log.e("[DB]", "Failed to get recipe" + e);
+            }
+        }
+        cursor.close();
+        db.close();
+        return recipe;
+    }
+
     public List<RecipeModel> getAllRecipes() {
         Log.d("[DB]", "Getting all recipes");
 
