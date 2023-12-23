@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rhammock.recipebook.adapters.IngredientListAdapter;
+
 import java.util.List;
 
 public class RecipeActivity extends AppCompatActivity {

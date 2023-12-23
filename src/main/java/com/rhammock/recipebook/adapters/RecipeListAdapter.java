@@ -1,4 +1,4 @@
-package com.rhammock.recipebook;
+package com.rhammock.recipebook.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.rhammock.recipebook.R;
+import com.rhammock.recipebook.RecipeActivity;
+import com.rhammock.recipebook.RecipeModel;
 
 import java.util.List;
 

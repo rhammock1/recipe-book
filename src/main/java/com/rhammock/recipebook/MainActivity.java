@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import com.rhammock.recipebook.R;
+import com.rhammock.recipebook.adapters.RecipeListAdapter;
 
 import java.util.List;
 
