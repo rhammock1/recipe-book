@@ -1,0 +1,1 @@
+SELECT go_search FROM go_search(${query});

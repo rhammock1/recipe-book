@@ -1,0 +1,3 @@
+ALTER TABLE recipe_ingredient_tags DROP CONSTRAINT recipe_ingredient_tags_check;
+DROP INDEX recipe_ingredient_tags_idx;
+ALTER TABLE recipe_ingredient_tags DROP COLUMN ingredient_uuid;

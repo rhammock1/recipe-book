@@ -1,0 +1,62 @@
+class {
+  onCreate() {
+    this.state = {
+      searchResults: [],
+      recipes: [],
+      selectedRecipe: null,
+    };
+  }
+
+  onMount() {
+    console.log('ANDROID INTERFACE: ', window.AndroidInterface);
+    if(window.AndroidInterface) {
+      window.AndroidInterface.showToast('Hello, World!');
+    }
+  }
+
+  async getAllRecipes() {
+    // go to /recipes
+    this.state.selectedRecipe = null;
+    const response = await fetch('/recipes');
+    if(!response.ok) {
+      console.error('FAILED TO GET RECIPES');
+      return;
+    }
+    const {recipes} = await response.json() || {};
+    this.state.recipes = recipes;
+  }
+
+  displaySearchResults(results) {
+    // results may be recipes, ingredients, or tagged
+    this.state.searchResults = results;
+  }
+
+  selectRecipe(recipe) {
+    this.state.selectedRecipe = recipe;
+  }
+};
+
+<div class="container">
+  <div>
+    <h1>Welcome to Recipe Book</h1>
+    <p>Here you can find a collection of recipes to help you cook delicious meals.</p>
+  </div>
+  <search-bar on-search-results('displaySearchResults') />
+  <div class="row">
+    <div class="col-md-12">
+      <button on-click('getAllRecipes') type="button" class="btn btn-primary">List all recipes</button>
+    </div>
+  </div>
+  <if(state.selectedRecipe)>
+    <recipe recipe=state.selectedRecipe />
+  </if>
+  <else-if(state.searchResults == null)>
+    <div class="d-flex flex-column">
+      <h2>No recipes found :(</h2>
+    </div>
+  </else-if>
+  <else-if(state.searchResults?.length || state.recipes.length)>
+    $ const recipes = state.searchResults?.length ? state.searchResults : state.recipes;
+    <recipes on-choose-recipe('selectRecipe') all=state.recipes.length recipes=recipes />
+  </else-if>
+</div>

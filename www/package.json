@@ -1,0 +1,49 @@
+{
+  "name": "recipe-book",
+  "description": "Digital recipe book for home cooking.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "cacheDirectories": [
+    "node_modules",
+    "dist"
+  ],
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
+  "dependencies": {
+    "@marko/express": "^1.0.0",
+    "compression": "^1.7.4",
+    "dotenv": "^16.0.1",
+    "express": "^4.17.1",
+    "marko": "^5.17.2",
+    "moment": "^2.29.4",
+    "node-fetch": "^2.6.7",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "@marko/compiler": "^5.16.1",
+    "@marko/webpack": "^9.2.0",
+    "css-loader": "^6.5.0",
+    "css-minimizer-webpack-plugin": "^3.1.1",
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^39.2.7",
+    "mini-css-extract-plugin": "^2.4.3",
+    "spawn-server-webpack-plugin": "^6.1.0",
+    "webpack": "^5.60.0",
+    "webpack-bundle-analyzer": "^3.9.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.3.1",
+    "webpack-merge": "^5.2.0",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "private": true,
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack && webpack serve --progress --mode development",
+    "dev:inspect": "INSPECT=1 npm run dev",
+    "start": "NODE_ENV=production node ./dist/server/main.js"
+  }
+}

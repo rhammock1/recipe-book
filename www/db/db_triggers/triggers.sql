@@ -1,0 +1,1 @@
+-- This is where the database triggers are defined
