@@ -27,6 +27,10 @@ body {
   box-sizing: border-box;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .container {
   margin-left: auto;
   margin-right: auto;
