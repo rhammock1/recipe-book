@@ -5,8 +5,8 @@ DECLARE
 BEGIN
   SELECT array_agg(t.tag_name)
   FROM tags t
-  INNER JOIN recipe_ingredient_tags rit ON t.tag_id = rit.tag_id
-  WHERE rit.recipe_uuid = _recipe_uuid
+  INNER JOIN recipe_tags rt ON t.tag_id = rt.tag_id
+  WHERE rt.recipe_uuid = _recipe_uuid
   INTO _recipe_tags;
 
   RETURN _recipe_tags;
@@ -24,9 +24,10 @@ BEGIN
       'unit_name', u.unit_name
     )
   ) AS ingredients
-  FROM ingredients i
+  FROM recipe_ingredients ri
+  INNER JOIN ingredients i ON i.ingredient_uuid = ri.ingredient_uuid
   INNER JOIN units u ON i.ingredient_unit = u.unit_id
-  WHERE i.recipe_uuid = _recipe_uuid
+  WHERE ri.recipe_uuid = _recipe_uuid
   INTO _recipe_ingredients;
 
   RETURN _recipe_ingredients;
