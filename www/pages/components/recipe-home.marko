@@ -44,7 +44,7 @@ class {
   <search-bar on-search-results('displaySearchResults') />
   <div class="row">
     <div class="col-md-12">
-      <button on-click('getAllRecipes') type="button" class="btn btn-primary">List all recipes</button>
+      <button on-click('getAllRecipes') type="button" class="btn btn-primary">${state.recipes?.length ? 'Back' : 'List all recipes'}</button>
     </div>
   </div>
   <if(state.selectedRecipe)>

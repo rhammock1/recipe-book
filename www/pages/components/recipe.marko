@@ -1,4 +1,39 @@
-<div>
+class {
+  onCreate() {
+    this.state = {ingredients: []};
+  }
+
+  onMount() {
+    this.getRecipeIngredients();
+  }
+
+  async getRecipeIngredients() {
+    try {
+      const response = await fetch(`/recipes/${this.input.recipe.recipe_uuid}/ingredients`);
+      if(!response.ok) {
+        console.error('Failed to get recipe ingredients', response);
+        return;
+      }
+
+      const recipe_ingredients = await response.json();
+      console.log('RECIPE INGREDIENTS: ', recipe_ingredients);
+      this.setState({ingredients: recipe_ingredients});
+    } catch(err) {
+      console.error('Error during ingredients fetch: ', err);
+    }
+  }
+}
+
+<div class="w-100 d-flex flex-column justify-content-center">
   <h1>${input.recipe.recipe_name}</h1>
   <p>${input.recipe.recipe_description}</p>
+  <if(state.ingredients.length)>
+    <div class="d-flex flex-wrap w-75">
+      <for|ingredient| of=state.ingredients>
+        <span>
+          ${ingredient.ingredient_name}- ${(ingredient.ingredient_quantity / 100).toFixed(2)} ${ingredient.unit_abbreviation}
+        </span>
+      </for>
+    </div>
+  </if>
 </div>
