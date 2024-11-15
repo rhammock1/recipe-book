@@ -1,6 +1,7 @@
 import express from 'express';
 import { getRecipes, getRecipeByUuid, createRecipe, updateRecipe, deleteRecipe } from '../actions/recipes';
 import { getIngredientsByRecipeUuid } from '../actions/ingredients';
+import { getInstructionsByRecipeUuid } from '../actions/instructions';
 
 const router = express.Router();
 
@@ -33,6 +34,12 @@ router.get('/:recipe_uuid/ingredients', async (req, res) => {
   const {params: {recipe_uuid}} = req;
   const ingredients = await getIngredientsByRecipeUuid(recipe_uuid);
   res.json(ingredients);
+});
+
+router.get('/:recipe_uuid/instructions', async (req, res) => {
+  const {params: {recipe_uuid}} = req;
+  const instructions = await getInstructionsByRecipeUuid(recipe_uuid);
+  res.json(instructions);
 });
 
 export default router;

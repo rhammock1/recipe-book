@@ -1,10 +1,30 @@
 class {
   onCreate() {
-    this.state = {ingredients: []};
+    this.state = {
+      ingredients: [],
+      instructions: [],
+    };
   }
 
   onMount() {
     this.getRecipeIngredients();
+    this.getRecipeInstructions();
+  }
+
+  async getRecipeInstructions() {
+    try {
+      const response = await fetch(`/recipes/${this.input.recipe.recipe_uuid}/instructions`);
+      if(!response.ok) {
+        console.error('Failed to get recipe instructions', response);
+        return;
+      }
+
+      const recipe_instructions = await response.json();
+      console.log('RECIPE INSTRUCTIONS: ', recipe_instructions);
+      this.setState({instructions: recipe_instructions});
+    } catch(err) {
+      console.error('Error during instructions fetch: ', err);
+    }
   }
 
   async getRecipeIngredients() {
@@ -35,5 +55,14 @@ class {
         </span>
       </for>
     </div>
+  </if>
+  <if(state.instructions.length)>
+    <ul>
+      <for|instruction| of=state.instructions>
+        <li key=`instruction-${instruction.instruction_id}`>
+          ${instruction.instruction}
+        </li>
+      </for>
+    </ul>
   </if>
 </div>
