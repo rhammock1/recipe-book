@@ -1,6 +1,7 @@
 class {
   onCreate() {
     this.state = {
+      view: 'home',
       searchResults: [],
       recipes: [],
       selectedRecipe: null,
@@ -24,6 +25,7 @@ class {
     }
     const {recipes} = await response.json() || {};
     this.state.recipes = recipes;
+    this.state.view = 'recipes';
   }
 
   displaySearchResults(results) {
@@ -37,16 +39,15 @@ class {
 };
 
 <div class="container">
-  <div>
-    <h1>Welcome to Recipe Book</h1>
-    <p>Here you can find a collection of recipes to help you cook delicious meals.</p>
-  </div>
+  <header />
   <search-bar on-search-results('displaySearchResults') />
-  <div class="row">
-    <div class="col-md-12">
-      <button on-click('getAllRecipes') type="button" class="btn btn-primary">${state.recipes?.length ? 'Back' : 'List all recipes'}</button>
+  <if(state.view === 'home')>
+    <div class="row">
+      <div class="col-md-12">
+        <button on-click('getAllRecipes') type="button" class="btn btn-primary">List all recipes</button>
+      </div>
     </div>
-  </div>
+  </if>
   <if(state.selectedRecipe)>
     <recipe recipe=state.selectedRecipe />
   </if>
