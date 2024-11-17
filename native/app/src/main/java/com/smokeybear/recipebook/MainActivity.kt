@@ -30,7 +30,9 @@ class MainActivity : ComponentActivity() {
         webSettings.javaScriptEnabled = true  // Enable JavaScript if needed
 
         webView.addJavascriptInterface(WebAppInterface(this), "AndroidInterface")
-        webView.loadUrl("https://robert-gotab.ngrok.io")  // Replace with your web app URL
+        if(savedInstanceState == null) {
+          webView.loadUrl("https://robert-gotab.ngrok.io") // Replace with your web app URL
+        }
 
         // Set up the swipe refresh layout
         swipeRefreshLayout.setOnRefreshListener {
@@ -50,7 +52,6 @@ class MainActivity : ComponentActivity() {
     }
 
     inner class WebAppInterface(private val context: Context) {
-
         @JavascriptInterface
         fun showToast(message: String) {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
