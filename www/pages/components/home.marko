@@ -52,6 +52,7 @@ class {
 
   displaySearchResults(results) {
     // results may be recipes, ingredients, or tagged
+    this.state.selectedRecipe = null;
     this.state.searchResults = results;
     this.state.view = 'recipes';
   }
