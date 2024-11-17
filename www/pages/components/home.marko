@@ -4,6 +4,7 @@ class {
       view: 'home',
       searchResults: [],
       recipes: [],
+      chunked_recipes: [],
       selectedRecipe: null,
     };
   }
@@ -26,6 +27,15 @@ class {
     const {recipes} = await response.json() || {};
     const require_has_image = true;
     this.state.recipes = recipes.filter(recipe => recipe.recipe_image || !require_has_image);
+    const chunk_size = 25;
+    this.state.chunked_recipes = this.state.recipes.reduce((chunks, recipe, i) => {
+      const chunk_index = Math.floor(i / chunk_size);
+      if(!chunks[chunk_index]) {
+        chunks[chunk_index] = [];
+      }
+      chunks[chunk_index].push(recipe);
+      return chunks;
+    }, []);
     this.state.view = 'recipes';
   }
 
@@ -47,7 +57,10 @@ class {
 
   handleHomeButton() {
     if(this.state.view === 'home') {
-      this.getAllRecipes();
+      this.state.view = 'recipes';
+      if(!this.state.recipes.length) {
+        this.getAllRecipes();
+      }
     } else {
       this.state.selectedRecipe = null;
       this.state.view = 'home';
@@ -74,7 +87,7 @@ class {
     </div>
   </else-if>
   <else-if(state.view === 'recipes')>
-    $ const recipes = state.searchResults?.length ? state.searchResults : state.recipes;
+    $ const recipes = state.searchResults?.length ? state.searchResults : state.chunked_recipes?.[0] || [];
     <recipes on-choose-recipe('selectRecipe') all=state.recipes.length recipes=recipes />
   </else-if>
 </div>
