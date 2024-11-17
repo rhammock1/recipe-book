@@ -1,6 +1,6 @@
 $ const {recipe} = input;
 <div class="card col-3 mx-1 mb-2 cursor-pointer" on-click('emit', 'select-recipe', recipe.recipe_uuid)>
-  <img src=recipe.recipe_image class="card-img-top w-">
+  <img src=recipe.recipe_image class="card-img-top">
   <div on-click('emit', 'get-recipe', recipe.recipe_uuid) class="card-body">
     <h5 class="card-title">${recipe.recipe_name}</h5>
     <p class="card-text">${recipe.headline}</p>
