@@ -38,6 +38,7 @@ class {
   displaySearchResults(results) {
     // results may be recipes, ingredients, or tagged
     this.state.searchResults = results;
+    this.state.view = 'recipes';
   }
 
   selectRecipe(recipe) {
@@ -63,7 +64,7 @@ class {
       <h2>No recipes found :(</h2>
     </div>
   </else-if>
-  <else-if(state.searchResults?.length || state.recipes.length)>
+  <else-if(state.view === 'recipes')>
     $ const recipes = state.searchResults?.length ? state.searchResults : state.recipes;
     <recipes on-choose-recipe('selectRecipe') all=state.recipes.length recipes=recipes />
   </else-if>
