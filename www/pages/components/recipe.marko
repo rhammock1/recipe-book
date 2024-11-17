@@ -56,20 +56,20 @@ class {
   </div>
   <p>${input.recipe.recipe_description}</p>
   <if(state.ingredients.length)>
-    <h2>Ingredients</h2>
+    <h2 class="mb-2">Ingredients</h2>
     <div class="d-flex flex-wrap w-75">
       <for|ingredient| of=state.ingredients>
-        <span class="w-25 mb-2">
+        <span class="col-4 mb-2">
           ${ingredient.ingredient_name}- ${(ingredient.ingredient_quantity / 100).toFixed(2)} ${ingredient.unit_abbreviation}
         </span>
       </for>
     </div>
   </if>
   <if(state.instructions.length)>
-    <h2>Instructions</h2>
+    <h2 class="mb-2">Instructions</h2>
     <ul>
       <for|instruction| of=state.instructions>
-        <li key=`instruction-${instruction.instruction_id}`>
+        <li class="list-group-item" key=`instruction-${instruction.instruction_id}`>
           ${instruction.instruction}
         </li>
       </for>
