@@ -24,8 +24,15 @@ class {
       return;
     }
     const {recipes} = await response.json() || {};
-    this.state.recipes = recipes;
+    const require_has_image = true;
+    this.state.recipes = recipes.filter(recipe => recipe.recipe_image || !require_has_image);
     this.state.view = 'recipes';
+  }
+
+  handleChangeView(view) {
+    this.state.view = view;
+    this.state.recipes = [];
+    this.state.selectedRecipe = null;
   }
 
   displaySearchResults(results) {
@@ -39,7 +46,7 @@ class {
 };
 
 <div class="container">
-  <header />
+  <header on-change-view('handleChangeView') />
   <search-bar on-search-results('displaySearchResults') />
   <if(state.view === 'home')>
     <div class="row">

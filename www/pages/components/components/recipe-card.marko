@@ -1,0 +1,11 @@
+$ const {recipe} = input;
+<div class="card">
+  <div class="card-header">
+    <h4 class="list-group-item-heading">${recipe.recipe_name}</h4>
+  </div>
+  <div on-click('emit', 'get-recipe', recipe.recipe_uuid) class="cursor-pointer card-body">
+    <div class="list-group-item">
+      <p class="list-group-item-text">${recipe.recipe_description}</p>
+    </div>
+  </div>
+</div>
