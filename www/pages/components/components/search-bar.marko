@@ -5,7 +5,9 @@ class {
       return;
     }
     console.log('SEARCHING...', query);
-    const response = await fetch(`/search?q=${query}`, {
+    const qs = new URLSearchParams(window.location.search);
+    qs.set('q', query);
+    const response = await fetch(`/search?${qs.toString()}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
