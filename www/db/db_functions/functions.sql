@@ -45,6 +45,9 @@ BEGIN
       'recipe_uuid', r.recipe_uuid,
       'recipe_name', r.recipe_name,
       'recipe_description', r.recipe_description,
+      'recipe_tags', go_get_recipe_tags(r.recipe_uuid),
+      'recipe_image', r.recipe_image,
+      'headline', r.headline,
       'resource_type', 'RECIPE'
     )
   ) INTO _search_results
