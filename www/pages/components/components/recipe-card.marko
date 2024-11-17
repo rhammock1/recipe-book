@@ -1,11 +1,8 @@
 $ const {recipe} = input;
-<div class="card">
-  <div class="card-header">
-    <h4 class="list-group-item-heading">${recipe.recipe_name}</h4>
-  </div>
-  <div on-click('emit', 'get-recipe', recipe.recipe_uuid) class="cursor-pointer card-body">
-    <div class="list-group-item">
-      <p class="list-group-item-text">${recipe.recipe_description}</p>
-    </div>
+<div class="card col-3 mx-1 mb-2 cursor-pointer" on-click('emit', 'select-recipe', recipe.recipe_uuid)>
+  <img src=recipe.recipe_image class="card-img-top w-">
+  <div on-click('emit', 'get-recipe', recipe.recipe_uuid) class="card-body">
+    <h5 class="card-title">${recipe.recipe_name}</h5>
+    <p class="card-text">${recipe.headline}</p>
   </div>
 </div>

@@ -16,19 +16,18 @@ class {
       All Recipes
     </h1>
   </if>
-  <ul class="list-group">
-    <if(input.recipes.length)>
-      <for|recipe| of=input.recipes>
-        <recipe-card key=`recipe-${recipe.recipe_uuid}` recipe=recipe on-get-recipe('getRecipe') />
-      </for>
-    </if>
-    <else>
-      <li class="list-group">
-        <div class="list-group">
-          <h4 class="list-group-item-heading">No recipes found</h4>
-          <p class="list-group-item-text">There are no recipes available at the moment.</p>
+  <div class="mx-auto">
+    <div class="w-100 d-flex flex-wrap">
+      <if(input.recipes.length)>
+        <for|recipe| of=input.recipes>
+          <recipe-card key=`recipe-${recipe.recipe_uuid}` on-select-recipe('getRecipe') recipe=recipe on-get-recipe('getRecipe') />
+        </for>
+      </if>
+      <else>
+        <div class="d-flex">
+          <h4 class="text-center">No recipes found</h4>
         </div>
-      </li>
-    </else>
-  </ul>
+      </else>
+    </div>
+  </div>
 </div>
