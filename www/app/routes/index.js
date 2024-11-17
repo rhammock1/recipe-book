@@ -1,8 +1,17 @@
 import express from 'express';
 import {search} from '../actions/index';
+import {getRecipeByUuid} from '../actions/recipes';
 import recipes from './recipes';
+import indexPage from "../../pages/index.marko";
 
 const router = express.Router();
+
+router.get('/', async (req, res) => {
+  const {query: {recipe_uuid}} = req;
+  const selected_recipe = recipe_uuid ? await getRecipeByUuid(recipe_uuid) : null;
+
+  res.marko(indexPage, {selected_recipe});
+});
 
 router.use('/recipes', recipes);
 

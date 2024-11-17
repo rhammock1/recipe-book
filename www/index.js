@@ -6,7 +6,6 @@ import markoMiddleware from "@marko/express";
 import db from './db';
 import log from './log';
 import routes from './app/routes';
-import indexPage from "./pages/index.marko";
 
 const {
   PORT = 8080,
@@ -43,7 +42,6 @@ app
   .use("/assets", express.static(path.join(__dirname, "dist/client"))) // Serve assets generated from webpack.
   .use(markoMiddleware()) // Enables res.marko. 
   .use(routes)
-  .get('/', (req, res) => res.marko(indexPage, {}))
   .listen(PORT, async (err) => {
     if(err) {
       throw err;
