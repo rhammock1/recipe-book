@@ -1,48 +1,53 @@
 class {
-  onCreate() {
+  onCreate(input) {
     this.state = {
-      view: 'home',
+      view: input.selected_recipe ? 'recipe' : 'home',
       searchResults: [],
       recipes: [],
       chunked_recipes: [],
-      selectedRecipe: null,
+      selectedRecipe: input.selected_recipe || null,
     };
   }
 
   onMount() {
-    console.log('ANDROID INTERFACE: ', window.AndroidInterface);
     if(window.AndroidInterface) {
       window.AndroidInterface.showToast('Hello, World!');
     }
+
+    this.getAllRecipes();
   }
 
   async getAllRecipes() {
-    // go to /recipes
-    this.state.selectedRecipe = null;
-    const response = await fetch('/recipes');
-    if(!response.ok) {
-      console.error('FAILED TO GET RECIPES');
-      return;
-    }
-    const {recipes} = await response.json() || {};
-    const require_has_image = true;
-    this.state.recipes = recipes.filter(recipe => recipe.recipe_image || !require_has_image);
-    const chunk_size = 25;
-    this.state.chunked_recipes = this.state.recipes.reduce((chunks, recipe, i) => {
-      const chunk_index = Math.floor(i / chunk_size);
-      if(!chunks[chunk_index]) {
-        chunks[chunk_index] = [];
+    try {
+      const response = await fetch('/recipes');
+      if(!response.ok) {
+        console.error('FAILED TO GET RECIPES');
+        return;
       }
-      chunks[chunk_index].push(recipe);
-      return chunks;
-    }, []);
-    this.state.view = 'recipes';
+      const {recipes} = await response.json() || {};
+      const require_has_image = true;
+      this.state.recipes = recipes.filter(recipe => recipe.recipe_image || !require_has_image);
+      const chunk_size = 25;
+      this.state.chunked_recipes = this.state.recipes.reduce((chunks, recipe, i) => {
+        const chunk_index = Math.floor(i / chunk_size);
+        if(!chunks[chunk_index]) {
+          chunks[chunk_index] = [];
+        }
+        chunks[chunk_index].push(recipe);
+        return chunks;
+      }, []);
+    } catch(err) {
+      console.error('Error while getting recipes: ', err);
+    }
   }
 
   handleChangeView(view) {
+    // this.state.selectedRecipe = null;
     this.state.view = view;
-    this.state.recipes = [];
-    this.state.selectedRecipe = null;
+    if(view === 'home') {
+      this.state.selectedRecipe = null;
+      window.history.pushState({}, '', '/');
+    }
   }
 
   displaySearchResults(results) {
@@ -53,31 +58,19 @@ class {
 
   selectRecipe(recipe) {
     this.state.selectedRecipe = recipe;
-  }
-
-  handleHomeButton() {
-    if(this.state.view === 'home') {
-      this.state.view = 'recipes';
-      if(!this.state.recipes.length) {
-        this.getAllRecipes();
-      }
-    } else {
-      this.state.selectedRecipe = null;
-      this.state.view = 'home';
-    }
+    window.history.pushState({}, '', `?recipe_uuid=${recipe.recipe_uuid}`);
+    this.state.view = 'recipe';
   }
 };
 
 <div class="container">
   <header on-change-view('handleChangeView') />
   <search-bar on-search-results('displaySearchResults') />
-  <!-- <if(state.view === 'home')> -->
   <div class="row">
     <div class="col-md-12">
-      <button on-click('handleHomeButton') type="button" class="btn btn-primary">${state.view === 'home' ? 'List all recipes' : 'Back'}</button>
+      <button on-click('handleChangeView', state.view === 'home' ? 'recipes' : 'home') type="button" class="btn btn-primary">${state.view === 'home' ? 'List all recipes' : 'Back'}</button>
     </div>
   </div>
-  <!-- </if> -->
   <if(state.selectedRecipe)>
     <recipe recipe=state.selectedRecipe />
   </if>
