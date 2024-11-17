@@ -1,6 +1,7 @@
 class {
   async handleSearch() {
-    const query = this.getEl('search-input').value;
+    const search_input = this.getEl('search-input');
+    const query = search_input?.value;
     if(!query) {
       return;
     }
@@ -19,6 +20,9 @@ class {
     }
     const results = await response.json();
     this.emit('search-results', results);
+    if(search_input) {
+      search_input.value = '';
+    }
   }
 };
 
