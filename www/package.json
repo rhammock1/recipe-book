@@ -45,6 +45,10 @@
     "dev": "webpack && webpack serve --progress --mode development",
     "dev:inspect": "INSPECT=1 npm run dev",
     "start": "node ./dist/server/main.js",
-    "docker": "docker build -t recipe-book . && docker run --env-file .env -p 8080:8080 recipe-book"
+    "docker": "docker build -t recipe-book . && docker run --env-file .env -p 8080:8080 recipe-book",
+    "docker:build": "docker build -t recipe-book .",
+    "docker:run": "docker run --env-file .env -p 8080:8080 recipe-book",
+    "docker:prepublish": "npm run docker:build && docker tag recipe-book:latest rhammock1/recipe-book:latest",
+    "docker:publish": "npm run docker:prepublish && docker push rhammock1/recipe-book:latest"
   }
 }
