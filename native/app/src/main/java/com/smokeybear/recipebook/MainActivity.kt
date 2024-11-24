@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
 
         webView.addJavascriptInterface(WebAppInterface(this), "AndroidInterface")
         if(savedInstanceState == null) {
-          webView.loadUrl("https://robert-gotab.ngrok.io") // Replace with your web app URL
+          webView.loadUrl("http://192.168.1.47:30080") // Replace with your web app URL
         }
 
         // Set up the swipe refresh layout
