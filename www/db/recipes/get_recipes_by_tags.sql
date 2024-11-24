@@ -6,7 +6,7 @@ SELECT r.recipe_uuid,
   u.unit_name AS recipe_yield_unit,
   array_agg(t.tag_name) AS recipe_tags
 FROM recipes r
-INNER JOIN units u ON r.recipe_yield_unit = u.unit_id
+LEFT JOIN units u ON r.recipe_yield_unit = u.unit_id
 INNER JOIN recipe_tags rt ON r.recipe_uuid = rt.recipe_uuid
 INNER JOIN tags t ON rt.tag_id = t.tag_id
 WHERE t.tag_name = ANY(${tags})
