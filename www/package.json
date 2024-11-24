@@ -44,6 +44,7 @@
     "build": "webpack",
     "dev": "webpack && webpack serve --progress --mode development",
     "dev:inspect": "INSPECT=1 npm run dev",
-    "start": "NODE_ENV=production node ./dist/server/main.js"
+    "start": "node ./dist/server/main.js",
+    "docker": "docker build -t recipe-book . && docker run --env-file .env -p 8080:8080 recipe-book"
   }
 }
