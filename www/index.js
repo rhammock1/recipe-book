@@ -39,7 +39,7 @@ const migrate = async () => {
 
 app
   .use(compressionMiddleware()) // Enable gzip compression for all HTTP responses.
-  .use("/assets", express.static(path.join(__dirname, "dist/client"))) // Serve assets generated from webpack.
+  .use("/assets", express.static(path.join(__dirname, "../client"))) // Serve assets generated from webpack.
   .use(markoMiddleware()) // Enables res.marko. 
   .use(routes)
   .listen(PORT, async (err) => {
