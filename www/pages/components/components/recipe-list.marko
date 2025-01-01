@@ -11,6 +11,14 @@ class {
 
   onMount() {
     this.paginateRecipes();
+
+    if(window.location.search) {
+      const params = new URLSearchParams(window.location.search);
+      const page = parseInt(params.get('page'));
+      if (page && page > 0 && page <= this.state.total_pages) {
+        this.state.current_page = page;
+      }
+    }
   }
 
   paginateRecipes() {
@@ -32,12 +40,19 @@ class {
     })
   }
 
+  updatePageQuery() {
+    const {current_page} = this.state;
+    window.history.pushState({}, '', `?page=${current_page}`);
+  }
+
   nextPage() {
     this.state.current_page++;
+    this.updatePageQuery();
   }
 
   prevPage() {
     this.state.current_page--;
+    this.updatePageQuery();
   }
 }
 
