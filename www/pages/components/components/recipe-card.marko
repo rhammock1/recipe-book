@@ -1,7 +1,16 @@
-$ const {recipe} = input;
-<div class="card col-3 mx-1 mb-2 cursor-pointer" on-click('emit', 'select-recipe', recipe.recipe_uuid)>
+class {
+  onCreate(input) {
+    this.state = {recipe: input.recipe}
+  }
+
+  selectRecipe() {
+    window.location.href = `/recipe/${this.state.recipe.recipe_uuid}`;
+  }
+}
+$ const {recipe} = state;
+<div class="card col-3 mx-1 mb-2 cursor-pointer" on-click('selectRecipe')>
   <img src=recipe.recipe_image class="card-img-top">
-  <div on-click('emit', 'get-recipe', recipe.recipe_uuid) class="card-body">
+  <div class="card-body">
     <h5 class="card-title">${recipe.recipe_name}</h5>
     <p class="card-text">${recipe.headline}</p>
   </div>
