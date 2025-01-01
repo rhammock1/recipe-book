@@ -2,6 +2,7 @@ import express from 'express';
 import { getRecipes, getRecipeByUuid, createRecipe, updateRecipe, deleteRecipe } from '../actions/recipes';
 import { getIngredientsByRecipeUuid } from '../actions/ingredients';
 import { getInstructionsByRecipeUuid } from '../actions/instructions';
+import recipesPage from "../../pages/recipes.marko";
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ const router = express.Router();
 router.route('/')
   .get(async (req, res) => {
     const recipes = await getRecipes();
-    res.json({ recipes });
+    res.marko(recipesPage, { recipes });
   })
   .post(async (req, res) => {
     const recipe = await createRecipe(req.body);
