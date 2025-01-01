@@ -4,6 +4,7 @@ import {getRecipeByUuid} from '../actions/recipes';
 import recipeRouter from './recipe';
 import recipesRouter from './recipes';
 import homePage from "../../pages/home.marko";
+import recipesPage from "../../pages/recipes.marko";
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.get('/search', async (req, res, next) => {
   try {
     const results = await search(q);
 
-    res.json(results);
+    res.marko(recipesPage, {recipes: results});
   } catch(err) {
     next(err);
   }

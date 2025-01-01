@@ -8,21 +8,7 @@ class {
     console.log('SEARCHING...', query);
     const qs = new URLSearchParams(window.location.search);
     qs.set('q', query);
-    const response = await fetch(`/search?${qs.toString()}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if(!response.ok) {
-      console.error('Failed to search');
-      return;
-    }
-    const results = await response.json();
-    this.emit('search-results', results);
-    if(search_input) {
-      search_input.value = '';
-    }
+    window.location.href = `/search?${qs.toString()}`;
   }
 };
 
