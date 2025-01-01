@@ -2,28 +2,17 @@ class {
 
 }
 
-<match-media|{ desktop }|
-  mobile="(max-width: 767px)"
-  tablet="(min-width: 768px) and (max-width: 1024px)"
-  desktop="(min-width: 1025px)"
->
-  <div class="container mt-3">
-    <div class="d-flex flex-column align-items-center">
-      <header 
-        classes="d-flex w-100 flex-row justify-content-between align-items-baseline"
-        on-search-results('displaySearchResults') />
-    </div>
-    <div class="mx-auto">
-      <div class="w-100 d-flex flex-wrap">
-        <if(input.recipes.length)>
-          <recipe-list recipes=input.recipes />
-        </if>
-        <else>
-          <div class="d-flex">
-            <h4 class="text-center">No recipes found</h4>
-          </div>
-        </else>
-      </div>
+<div class="container mt-3">
+  <div class="mx-auto">
+    <div class="w-100 d-flex flex-wrap">
+      <if(input.recipes.length)>
+        <recipe-list recipes=input.recipes />
+      </if>
+      <else>
+        <div class="d-flex">
+          <h4 class="text-center">No recipes found</h4>
+        </div>
+      </else>
     </div>
   </div>
-</match-media>
+</div>
