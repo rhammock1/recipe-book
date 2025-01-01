@@ -4,9 +4,9 @@ class {
   }
 }
 
-<div class=input.classes>
+<div class=['d-flex w-100', input.desktop ? 'flex-row justify-content-between align-items-baseline' : 'flex-column align-items-center']>
   <h1 class="cursor-pointer" on-click('goHome')>Truese's Kitchen</h1>
-  <search-bar home=input.home on-search-results('emit', 'search-results') />
+  <search-bar home=input.home />
   <if(input.home)>
     <div class="d-flex flex-column align-items-center justify-content-center">
       <span class="text-muted">- or -</span>
