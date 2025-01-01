@@ -1,0 +1,55 @@
+class {
+  onCreate() {
+    this.state = {
+      paginated_recipes: [],
+      current_page: 1,
+      total_pages: 1,
+    };
+
+    this.maxPerPage = 24;
+  }
+
+  onMount() {
+    this.paginateRecipes();
+  }
+
+  paginateRecipes() {
+    const {recipes} = this.input;
+    const total_pages = Math.ceil(recipes.length / this.maxPerPage);
+
+    const paginated_recipes = recipes.reduce((pages, recipe, index) => {
+      const page = Math.floor(index / this.maxPerPage);
+      if (!pages[page]) {
+        pages[page] = [];
+      }
+      pages[page].push(recipe);
+      return pages;
+    }, []);
+
+    this.setState({
+      paginated_recipes,
+      total_pages,
+    })
+  }
+
+  nextPage() {
+    this.state.current_page++;
+  }
+
+  prevPage() {
+    this.state.current_page--;
+  }
+}
+
+<div class="d-flex justify-content-center flex-wrap">
+  <if(state.paginated_recipes.length)>
+    <for|recipe| of=state.paginated_recipes[state.current_page - 1]>
+      <recipe-card key=`recipe-${recipe.recipe_uuid}` recipe=recipe />
+    </for>
+    <div class="d-flex w-100 justify-content-center">
+      <button class="btn btn-primary" on-click('prevPage') disabled=state.current_page === 1>Previous</button>
+      <span class="mx-2">Page ${state.current_page} of ${state.total_pages}</span>
+      <button class="btn btn-primary" on-click('nextPage') disabled=state.current_page === state.total_pages>Next</button>
+    </div>
+  </if>
+</div>
