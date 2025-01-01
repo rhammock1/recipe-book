@@ -26,18 +26,14 @@ class {
   }
 };
 
-<div class="row my-3">
-  <div class="col-md-12">
-    <div class="input-group mb-3">
-      <input 
-        key="search-input"
-        type="text" 
-        class="form-control" 
-        placeholder="Search for recipes" 
-        aria-label="Search for recipes" 
-        aria-describedby="button-search-recipes"
-        on-keypress((e) => e.keyCode === 13 ? component.handleSearch() : null) />
-      <button on-click('handleSearch') class="btn btn-outline-secondary" type="button" id="button-search-recipes">Search</button>
-    </div>
-  </div>
+<div class=['mb-3 d-flex', {'flex-column': input.home}]>
+  <input 
+    key="search-input"
+    type="text" 
+    class="form-control" 
+    placeholder="Search for recipes" 
+    aria-label="Search for recipes" 
+    aria-describedby="button-search-recipes"
+    on-keypress((e) => e.keyCode === 13 ? component.handleSearch() : null) />
+  <button on-click('handleSearch') class="btn btn-outline-secondary" type="button" id="button-search-recipes">Search</button>
 </div>
