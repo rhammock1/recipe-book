@@ -23,7 +23,7 @@ router.get('/search', async (req, res, next) => {
   try {
     const results = await search(q);
 
-    res.marko(recipesPage, {recipes: results});
+    res.marko(recipesPage, {recipes: results || []});
   } catch(err) {
     next(err);
   }
