@@ -16,7 +16,7 @@
           tablet="(min-width: 768px) and (max-width: 1024px)"
           desktop="(min-width: 1025px)"
         >
-          <if(!input.hide_header)>
+          <if(!input.hide_header && !(input.hide_header_if_desktop && desktop))>
             <header desktop=desktop />
           </if>
           <main id="main">
