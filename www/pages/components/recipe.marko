@@ -1,3 +1,5 @@
+import header from '../../components/header/header.marko';
+
 class {
   onCreate() {
     this.state = {
@@ -42,7 +44,47 @@ class {
   }
 }
 
-<div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+<div class=['w-100 h-100 d-flex', {'flex-column align-items-center': !input.desktop}]>
+  <div class=['d-flex flex-column', input.desktop ? 'col-4' : 'w-100 align-items-center']>
+    <${header} drawer=input.desktop />
+    <img class=[input.desktop ? 'w-100' : 'col-8'] src=input.recipe.recipe_image />
+    <div class="px-3 d-flex flex-column">
+      <h2 class="text-center">${input.recipe.recipe_name}</h2>
+      <span class="text-center mb-3">
+        ${input.recipe.headline}
+      </span>
+      <p>${input.recipe.recipe_description}</p>
+    </div>
+  </div>
+  <div class="px-3 d-flex flex-column col-8 justify-content-around">
+    <div class="">
+      <if(state.ingredients.length)>
+        <h4 class="text-center mb-2">Ingredients</h4>
+        <div class="d-flex flex-wrap w-100">
+          <for|ingredient| of=state.ingredients>
+            <span class="col-4 px-3 mb-2">
+              ${ingredient.ingredient_name}- ${!ingredient.ingredient_quantity ? 'to taste' : (ingredient.ingredient_quantity / 100).toFixed(2)} ${ingredient.unit_abbreviation}
+            </span>
+          </for>
+        </div>
+      </if>
+    </div>
+    <div class="">
+      <if(state.instructions.length)>
+        <h2 class="text-center mb-2">Instructions</h2>
+        <ul>
+          <for|instruction| of=state.instructions>
+            <li class="list-group-item" key=`instruction-${instruction.instruction_id}`>
+              ${instruction.instruction}
+            </li>
+          </for>
+        </ul>
+      </if>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
   <div class="col-8">
     <img class="w-100" src=input.recipe.recipe_image />
   </div>
@@ -73,4 +115,4 @@ class {
       </for>
     </ul>
   </if>
-</div>
+</div> -->

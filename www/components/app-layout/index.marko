@@ -10,16 +10,16 @@
   </head>
   <body>
     <div class="w-100 vh-100 d-flex flex-column justify-content-between">
-      <div class="container w-100">
+      <div class="w-100 h-100">
         <match-media|{ desktop }|
           mobile="(max-width: 767px)"
           tablet="(min-width: 768px) and (max-width: 1024px)"
           desktop="(min-width: 1025px)"
         >
-          <if(!input.hide_header && !(input.hide_header_if_desktop && desktop))>
+          <if(!input.hide_header)>
             <header desktop=desktop />
           </if>
-          <main id="main">
+          <main id="main" class="w-100 h-100">
             <${input.body} desktop=desktop />
           </main>
         </match-media>
