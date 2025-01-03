@@ -12,6 +12,7 @@
     "npm": "8.x"
   },
   "dependencies": {
+    "@marko-tags/match-media": "^1.3.0",
     "@marko/express": "^1.0.0",
     "compression": "^1.7.4",
     "dotenv": "^16.0.1",

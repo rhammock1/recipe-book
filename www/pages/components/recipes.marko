@@ -1,27 +1,12 @@
 class {
-  async getRecipe(recipe_uuid) {
-    const response = await fetch(`/recipes/${recipe_uuid}`);
-    if(!response.ok) {
-      console.error('FAILED TO GET RECIPE');
-      return;
-    }
-    const {recipe} = await response.json() || {};
-    this.emit('choose-recipe', recipe);
-  }
+
 }
 
-<div class="">
-  <if(input.all)>
-    <h1>
-      All Recipes
-    </h1>
-  </if>
+<div class="container mt-3">
   <div class="mx-auto">
     <div class="w-100 d-flex flex-wrap">
       <if(input.recipes.length)>
-        <for|recipe| of=input.recipes>
-          <recipe-card key=`recipe-${recipe.recipe_uuid}` on-select-recipe('getRecipe') recipe=recipe on-get-recipe('getRecipe') />
-        </for>
+        <recipe-list recipes=input.recipes />
       </if>
       <else>
         <div class="d-flex">

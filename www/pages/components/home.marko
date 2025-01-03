@@ -1,11 +1,10 @@
+import header from '../../components/header/header.marko';
+
 class {
-  onCreate(input) {
+  onCreate() {
     this.state = {
-      view: input.selected_recipe ? 'recipe' : 'home',
+      view: 'home',
       searchResults: [],
-      recipes: [],
-      chunked_recipes: [],
-      selectedRecipe: input.selected_recipe || null,
     };
   }
 
@@ -13,75 +12,30 @@ class {
     if(window.AndroidInterface) {
       window.AndroidInterface.showToast('Hello, World!');
     }
-
-    this.getAllRecipes();
-  }
-
-  async getAllRecipes() {
-    try {
-      const response = await fetch('/recipes');
-      if(!response.ok) {
-        console.error('FAILED TO GET RECIPES');
-        return;
-      }
-      const {recipes} = await response.json() || {};
-      const require_has_image = true;
-      this.state.recipes = recipes.filter(recipe => recipe.recipe_image || !require_has_image);
-      const chunk_size = 25;
-      this.state.chunked_recipes = this.state.recipes.reduce((chunks, recipe, i) => {
-        const chunk_index = Math.floor(i / chunk_size);
-        if(!chunks[chunk_index]) {
-          chunks[chunk_index] = [];
-        }
-        chunks[chunk_index].push(recipe);
-        return chunks;
-      }, []);
-    } catch(err) {
-      console.error('Error while getting recipes: ', err);
-    }
-  }
-
-  handleChangeView(view) {
-    // this.state.selectedRecipe = null;
-    this.state.view = view;
-    if(view === 'home') {
-      this.state.selectedRecipe = null;
-      window.history.pushState({}, '', '/');
-    }
   }
 
   displaySearchResults(results) {
     // results may be recipes, ingredients, or tagged
-    this.state.selectedRecipe = null;
     this.state.searchResults = results;
-    this.state.view = 'recipes';
-  }
-
-  selectRecipe(recipe) {
-    this.state.selectedRecipe = recipe;
-    window.history.pushState({}, '', `?recipe_uuid=${recipe.recipe_uuid}`);
-    this.state.view = 'recipe';
+    this.state.view = 'search';
   }
 };
 
-<div class="container">
-  <header on-change-view('handleChangeView') />
-  <search-bar on-search-results('displaySearchResults') />
-  <div class="row">
-    <div class="col-md-12">
-      <button on-click('handleChangeView', state.view === 'home' ? 'recipes' : 'home') type="button" class="btn btn-primary">${state.view === 'home' ? 'List all recipes' : 'Back'}</button>
-    </div>
+
+<div class="container mt-3">
+  <div class="d-flex flex-column align-items-center">
+    <${header} 
+      home=state.view === 'home'
+      on-search-results('displaySearchResults') />
   </div>
-  <if(state.selectedRecipe)>
-    <recipe recipe=state.selectedRecipe />
+  <if(state.view === 'search')>
+    <if(state.searchResults == null)>
+      <div class="d-flex flex-column">
+        <h2>No recipes found :(</h2>
+      </div>
+    </if>
+    <else>
+      <recipe-list recipes=state.searchResults />
+    </else>
   </if>
-  <else-if(state.searchResults == null)>
-    <div class="d-flex flex-column">
-      <h2>No recipes found :(</h2>
-    </div>
-  </else-if>
-  <else-if(state.view === 'recipes')>
-    $ const recipes = state.searchResults?.length ? state.searchResults : state.chunked_recipes?.[0] || [];
-    <recipes on-choose-recipe('selectRecipe') all=state.recipes.length recipes=recipes />
-  </else-if>
 </div>
