@@ -13,7 +13,7 @@ class {
 
   async getRecipeInstructions() {
     try {
-      const response = await fetch(`/recipes/${this.input.recipe.recipe_uuid}/instructions`);
+      const response = await fetch(`/recipe/${this.input.recipe.recipe_uuid}/instructions`);
       if(!response.ok) {
         console.error('Failed to get recipe instructions', response);
         return;
@@ -28,7 +28,7 @@ class {
 
   async getRecipeIngredients() {
     try {
-      const response = await fetch(`/recipes/${this.input.recipe.recipe_uuid}/ingredients`);
+      const response = await fetch(`/recipe/${this.input.recipe.recipe_uuid}/ingredients`);
       if(!response.ok) {
         console.error('Failed to get recipe ingredients', response);
         return;
