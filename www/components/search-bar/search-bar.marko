@@ -1,4 +1,12 @@
 class {
+  onCreate() {
+    this.state = {mounted: false};
+  }
+
+  onMount() {
+    this.state.mounted = true;
+  }
+
   async handleSearch() {
     const search_input = this.getEl('search-input');
     const query = search_input?.value;
@@ -12,14 +20,16 @@ class {
   }
 };
 
-<div class=['mb-3 d-flex', {'flex-column': input.home}]>
-  <input 
-    key="search-input"
-    type="text" 
-    class="form-control" 
-    placeholder="Search for recipes" 
-    aria-label="Search for recipes" 
-    aria-describedby="button-search-recipes"
-    on-keypress((e) => e.keyCode === 13 ? component.handleSearch() : null) />
-  <button on-click('handleSearch') class="btn btn-outline-secondary" type="button" id="button-search-recipes">Search</button>
-</div>
+<if(state.mounted)>
+  <div class=['mb-3 d-flex', {'flex-column': input.home}]>
+    <input 
+      key="search-input"
+      type="text" 
+      class="form-control" 
+      placeholder="Search for recipes" 
+      aria-label="Search for recipes" 
+      aria-describedby="button-search-recipes"
+      on-keypress((e) => e.keyCode === 13 ? component.handleSearch() : null) />
+    <button on-click('handleSearch') class="btn btn-outline-secondary" type="button" id="button-search-recipes">Search</button>
+  </div>
+</if>
