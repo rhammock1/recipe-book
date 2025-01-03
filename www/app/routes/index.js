@@ -5,6 +5,7 @@ import recipeRouter from './recipe';
 import recipesRouter from './recipes';
 import homePage from "../../pages/home.marko";
 import recipesPage from "../../pages/recipes.marko";
+import notFoundPage from "../../pages/not-found.marko";
 
 const router = express.Router();
 
@@ -27,11 +28,15 @@ router.get('/search', async (req, res, next) => {
   } catch(err) {
     next(err);
   }
-})
+});
 
 router.use((err, _req, res, _next) => {
   console.error(err);
   res.status(500).send('Internal Server Error');
+});
+
+router.use((_req, res, _next) => {
+  res.marko(notFoundPage, {});
 });
 
 
